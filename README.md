@@ -13,7 +13,7 @@ Este proyecto te permite convertir fácilmente archivos PDF con preguntas de tip
 
 ## Cómo usar PDFaTest 🤓
 
-Dado que este proyecto está alojado en GitHub y es una página web, lo más probable es que no necesites descargar nada. Simplemente accede a la página web del proyecto (añade aquí el enlace a tu página) y sigue estos pasos:
+Dado que este proyecto está alojado en GitHub y es una página web, lo más probable es que no necesites descargar nada. Simplemente accede a la página web del proyecto (https://finnmaximus.github.io/PDFaTest) y sigue estos pasos:
 
 1. **Sube tu PDF:** Utiliza la interfaz de la aplicación para subir tu archivo PDF con las preguntas.
 2. **Edita las preguntas (opcional):** Revisa las preguntas detectadas y realiza los cambios necesarios.
