@@ -1,0 +1,121 @@
+/* public/css/styles.css */
+
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #535bf2;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    justify-content: center;
+    background-color: #242424; /* Ajustado para mantener el fondo oscuro */
+    color: rgba(255, 255, 255, 0.87); /* Ajustado para mantener el color del texto */
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    background-color: #212121; /* Fondo interior más claro */
+    padding: 40px;
+    border: 1px solid #171717; /* Borde exterior oscuro */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333; /* Color del título */
+}
+
+/* Añadido para ajustar el color del título dentro del contenedor */
+.container h1 {
+    color: white; /* Color del título ajustado a blanco */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.file-label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #646cff; /* Color del texto del label */
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: auto;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    padding: 12px 24px;
+    background-color: #646cff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #535bf2; /* Color de fondo del botón al pasar el mouse */
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+}
+
+#loader {
+    display: none;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #fff;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: white; /* Color del mensaje ajustado a blanco */
+}
