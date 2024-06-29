@@ -1,0 +1,154 @@
+body {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    background-color: #242424;
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.container {
+    width: 80%;
+    margin: 50px auto;
+    background: #212121;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(14, 41, 197, 0.1);
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+.question {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 5px solid #171717;
+    border-radius: 8px;
+    background-color: #242424;
+    position: relative;
+}
+
+.questionHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.deleteQuestionButton {
+    background-color: #646cff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    left: -50px;
+    top: 15px;
+}
+
+textarea.questionText, input.optionText {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: none;
+    font-family: inherit;
+}
+
+textarea.questionText {
+    font-size: 1.1em;
+}
+
+.options {
+    margin-top: 10px;
+}
+
+.optionContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.optionContainer input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.optionContainer input[type="radio"] {
+    margin-right: 10px;
+}
+
+.deleteOptionButton {
+    background-color: #646cff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.addOptionButton, .moveQuestionButton {
+    background-color: #646cff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button {
+    background-color: #646cff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #535bf2;
+}
+
+.addQuestionButton.green {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    margin: 20px auto;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 1;
+    text-align: center;
+}
+
+.addQuestionButton.green:hover {
+    background-color: #218838;
+}
+
+#saveButton {
+    display: block;
+    width: 100%;
+}
+
+.moveQuestionButton {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 10px;
+    color: white;
+}
+.message {
+    color: #888;
+    margin-bottom: 10px;
+    text-align: center;
+}
