@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Preguntas</title>
+    <link rel="stylesheet" href="css/edit-styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Preguntas</h1>
+        <div id="questionsContainer"></div>
+        <div class="message">IMPORTANTE: Asegúrate de verificar que las respuestas correctas estén bien marcadas antes de guardar.</div>
+        <button id="saveButton">Guardar Cuestionario</button>
+
+<script>
+    document.getElementById('saveButton').addEventListener('click', function() {
+        fetch('/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ questions })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.blob();
+            } else {
+                throw new Error('Error al guardar el cuestionario');
+            }
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'quiz.html';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al guardar el cuestionario.');
+        });
+    });
+</script>
+    </div>
+
+    <script>
+        let questions = JSON.parse(sessionStorage.getItem('questions')) || [];
+        const questionsContainer = document.getElementById('questionsContainer');
+
+        function renderQuestions() {
+            questionsContainer.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const optionsHTML = q.options.map((option, i) => `
+                    <div class="optionContainer">
+                        <input type="radio" name="correct${index}" class="correctOption" value="${i}" ${q.correctOption === i ? 'checked' : ''} onclick="updateCorrectOption(${index}, ${i})">
+                        <input type="text" class="optionText" value="${option}" oninput="updateOption(${index}, ${i}, this.value)">
+                        <button type="button" class="deleteOptionButton" onclick="removeOption(${index}, ${i})">❌</button>
+                    </div>
+                `).join('');
+
+                questionsContainer.insertAdjacentHTML('beforeend', `
+                    <div class="question" id="question${index}">
+                        <div class="questionHeader">
+                            <button type="button" class="deleteQuestionButton" onclick="removeQuestion(${index})">❌</button>
+                            <textarea class="questionText" oninput="updateQuestion(${index}, this.value)">${q.question}</textarea>
+                            <div class="moveQuestionButton" onclick="moveQuestionUp(${index})">&#x25B2;</div>
+                            <div class="moveQuestionButton" onclick="moveQuestionDown(${index})">&#x25BC;</div>
+                        </div>
+                        <div class="options" id="optionsList${index}">
+                            ${optionsHTML}
+                        </div>
+                        <button type="button" class="addOptionButton" onclick="addOption(${index})">Añadir Opción</button>
+                    </div>
+                `);
+
+                if (index < questions.length - 1) {
+                    questionsContainer.insertAdjacentHTML('beforeend', `<button type="button" class="addQuestionButton green" onclick="addQuestion(${index + 1})">+</button>`);
+                }
+            });
+
+            if (questions.length === 0 || questionsContainer.children.length === questions.length * 2 - 1) {
+                questionsContainer.insertAdjacentHTML('beforeend', '<button type="button" class="addQuestionButton green" onclick="addQuestion(questions.length)">+</button>');
+            }
+
+            autoResizeTextAreas();
+
+            questions.forEach((q, index) => {
+                const optionsList = document.getElementById(`optionsList${index}`);
+                new Sortable(optionsList, {
+                    animation: 150,
+                    group: 'shared',
+                    onEnd: (evt) => handleOptionDrop(evt, index)
+                });
+            });
+        }
+
+        function updateQuestion(index, value) {
+            questions[index].question = value;
+        }
+
+        function updateOption(questionIndex, optionIndex, value) {
+            questions[questionIndex].options[optionIndex] = value;
+        }
+
+        function updateCorrectOption(questionIndex, optionIndex) {
+            questions[questionIndex].correctOption = optionIndex;
+        }
+
+        function addOption(questionIndex) {
+            questions[questionIndex].options.push('');
+            renderQuestions();
+        }
+
+        function removeOption(questionIndex, optionIndex) {
+            questions[questionIndex].options.splice(optionIndex, 1);
+            if (questions[questionIndex].correctOption === optionIndex) {
+                questions[questionIndex].correctOption = -1; // Indicar que no hay una opción correcta seleccionada
+            } else if (questions[questionIndex].correctOption > optionIndex) {
+                questions[questionIndex].correctOption--;
+            }
+            renderQuestions();
+        }
+
+        function addQuestion(position) {
+            if (position < questions.length) {
+                questions.splice(position, 0, { question: '', options: [''], correctOption: -1 });
+            } else {
+                questions.push({ question: '', options: [''], correctOption: -1 });
+            }
+            renderQuestions();
+        }
+
+        function removeQuestion(questionIndex) {
+            questions.splice(questionIndex, 1);
+            renderQuestions();
+        }
+
+        function autoResizeTextAreas() {
+            document.querySelectorAll('textarea').forEach(textarea => {
+                textarea.style.height = 'auto';
+                textarea.style.height = `${textarea.scrollHeight}px`;
+                textarea.addEventListener('input', () => {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = `${textarea.scrollHeight}px`;
+                });
+            });
+        }
+
+        function handleOptionDrop(event, questionIndex) {
+            const optionsList = document.getElementById(`optionsList${questionIndex}`);
+            const newOptions = Array.from(optionsList.children).map(optionContainer => optionContainer.querySelector('.optionText').value);
+            questions[questionIndex].options = newOptions;
+
+            const correctOptionElement = optionsList.querySelector('.correctOption:checked');
+            questions[questionIndex].correctOption = correctOptionElement ? Array.from(optionsList.children).indexOf(correctOptionElement.closest('.optionContainer')) : -1;
+
+            renderQuestions();
+        }
+
+        function moveQuestionUp(index) {
+            if (index > 0) {
+                const question = questions.splice(index, 1)[0];
+                questions.splice(index - 1, 0, question);
+                renderQuestions();
+            }
+        }
+
+        function moveQuestionDown(index) {
+            if (index < questions.length - 1) {
+                const question = questions.splice(index, 1)[0];
+                questions.splice(index + 1, 0, question);
+                renderQuestions();
+            }
+        }
+
+        document.getElementById('saveButton').addEventListener('click', () => {
+            sessionStorage.setItem('questions', JSON.stringify(questions));
+            console.log('Preguntas guardadas:', questions);
+        });
+
+        renderQuestions();
+    </script>
+</body>
+</html>
