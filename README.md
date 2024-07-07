@@ -1,4 +1,4 @@
-## ¡Bienvenido a PDFaTest! 👋
+## ¡Bienvenido a pdf2test! 👋
 
 Este proyecto te permite convertir fácilmente archivos PDF con preguntas de tipo test en un archivo interactivo `quiz.html`. ¡Perfecto para practicar y poner a prueba tus conocimientos!
 
@@ -11,9 +11,9 @@ Este proyecto te permite convertir fácilmente archivos PDF con preguntas de tip
 3. **Conversión:** La herramienta procesa tu PDF y genera un archivo `quiz.html` con las preguntas y opciones de respuesta listas para interactuar. Antes de generar el `quiz.html`, se abre una página donde puedes editar las preguntas para seleccionar cuál es la correcta, añadir otras preguntas, reordenarlas o modificarlas en caso de que alguna haya sido detectada erróneamente.
 4. **¡A practicar!** Simplemente abre el archivo `quiz.html` en tu navegador web y comienza a responder las preguntas.
 
-## Cómo usar PDFaTest 🤓
+## Cómo usar pdf2est 🤓
 
-Dado que este proyecto está alojado en GitHub y es una página web, lo más probable es que no necesites descargar nada. Simplemente accede a la página web del proyecto (https://pdfatest.koyeb.app) y sigue estos pasos:
+Dado que este proyecto está alojado en GitHub y es una página web, lo más probable es que no necesites descargar nada. Simplemente accede a la página web del proyecto () y sigue estos pasos:
 
 1. **Sube tu PDF:** Utiliza la interfaz de la aplicación para subir tu archivo PDF con las preguntas.
 2. **Edita las preguntas (opcional):** Revisa las preguntas detectadas y realiza los cambios necesarios.
